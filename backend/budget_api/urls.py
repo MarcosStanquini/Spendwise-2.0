@@ -1,8 +1,11 @@
-from budget_api.views import revenue_list, expense_list
-from django.urls import path
+from . import views
+from django.urls import path, include
+from rest_framework import routers
 
+router = routers.DefaultRouter()
+router.register('revenues', views.RevenueViewSet)
+router.register('expenses', views.ExpenseViewSet)
 
 urlpatterns = [
-    path('revenue/', revenue_list),
-    path('expense/', expense_list),
+    path('', include(router.urls)),
 ]
