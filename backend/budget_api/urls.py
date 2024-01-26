@@ -3,8 +3,8 @@ from django.urls import path, include
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register('revenues', views.RevenueViewSet)
-router.register('expenses', views.ExpenseViewSet)
+router.register('budgets', views.BudgetViewSet)
+
 
 urlpatterns = [
     path('', include(router.urls)),
