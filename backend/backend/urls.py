@@ -21,3 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('budget/', include('budget_api.urls')),
 ]
+ 
