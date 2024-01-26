@@ -13,8 +13,21 @@ class Budget(models.Model):
 
 
 class Revenue(Budget):
+    class Meta:
+        verbose_name = 'Revenue'
+        verbose_name_plural = 'Revenues'
+
+    def __str__(self) -> str:
+        return self.name  
     pass
 
 class Expense(Budget):
-    pass
+      class Meta:
+        verbose_name = 'Expense'
+        verbose_name_plural = 'Expenses'
+
+      def __str__(self) -> str:
+        return self.name  
+      
+      pass
 
