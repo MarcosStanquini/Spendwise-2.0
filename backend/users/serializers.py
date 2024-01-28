@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = User
-        fields = ['id', 'name', 'email', 'password' ]
+        fields = ['id', 'name', 'username', 'password' ]
         extra_kwargs = {
             'password': {'write_only': True}
 
@@ -25,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         # Atualize os campos do modelo conforme necessário
         instance.name = validated_data.get('name', instance.name)
-        instance.email = validated_data.get('email', instance.email)
+        instance.username = validated_data.get('username', instance.username)
 
         # Atualize a senha se estiver presente nos dados validados
         password = validated_data.get('password', None)

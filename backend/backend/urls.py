@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('token/', TokenObtainPairView.as_view()),
     path('token/refresh', TokenRefreshView.as_view()),
-    path('budget/', include('budget_api.urls')),
-    path('client/', include('users.urls')),
+    path('budgets/', include('budget_api.urls')),
+    path('users/', include('users.urls')),
 ]
  
