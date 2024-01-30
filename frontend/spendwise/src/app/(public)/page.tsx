@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Login() {
   return (
     <h1>Hello World</h1>
   );
