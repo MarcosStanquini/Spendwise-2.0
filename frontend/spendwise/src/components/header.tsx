@@ -10,7 +10,6 @@ export function Header() {
         </Link>
       </div>
       <div className="flex flex-row items-center gap-8 text-xl mr-14">
-        
         <Link href={"/inserir"} className="flex"><Plus className="mt-[2.5px]"/>Inserir</Link>
         <Link href={"/visualizar"} className="flex"><Eye className="mt-[2.5px]"/>Visualizar</Link>
         <Link href={"/relatorio"} className="flex gap-1"><NotebookPen className="mt-[2.5px]"/>Relatório</Link>
