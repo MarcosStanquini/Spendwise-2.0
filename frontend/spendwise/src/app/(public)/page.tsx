@@ -1,12 +1,18 @@
 import Image from "next/image";
-import { FormLogin } from "../../components/forms/formulario-login"
+import { FormLogin } from "../../components/forms/formulario-login";
 
 export default function Login() {
   return (
     <div className="grid min-h-[840px] grid-cols-2 mt-14 ml-20">
-      <FormLogin/>
+      <FormLogin />
       <div className="flex justify-center  items-center w-10/12">
-        <Image src={"/login-image.jpg"} alt="" width={840} height={840} quality={80}/>
+        <Image
+          src={"/login-image.jpg"}
+          alt=""
+          width={840}
+          height={840}
+          quality={80}
+        />
       </div>
     </div>
   );
