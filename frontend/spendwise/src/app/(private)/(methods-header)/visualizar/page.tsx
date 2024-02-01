@@ -6,17 +6,37 @@ import {
   TableCell,
   Table,
 } from "@/components/ui/table";
-import { Pencil, Trash2 } from "lucide-react";
+import { ArrowUpCircle, Pencil, Trash2, DollarSign, ArrowDownCircle } from "lucide-react";
 import Link from "next/link";
 
 export default function Visualizar() {
   return (
     <div>
-      <div className="flex justify-center">
-        <p className="text-2xl font-semibold mt-7">Seu saldo é: XX</p>
+      <div className="flex justify-center gap-9 p-8">
+        <div className="w-80 h-36 bg-gray-400 rounded-lg border-2 border-zinc-600">
+          <header className="flex items-center justify-between m-5">
+            <span className="font-bold text-lg">Receitas</span>
+            <ArrowUpCircle className="text-green-700" size={26}/>
+          </header>
+          <span className="font-extrabold block mt-8 ml-5 text-2xl">R$2.500,00</span>
+        </div>
+        <div className="w-80 h-36 bg-gray-400 rounded-lg border-2 border-zinc-600">
+          <header className="flex items-center justify-between m-5">
+            <span className="font-bold text-lg">Despesas</span>
+            <ArrowDownCircle className="text-red-700" size={26}/>
+          </header>
+          <span className="font-extrabold block mt-8 ml-5 text-2xl">R$350,00</span>
+        </div>
+        <div className="w-80 h-36 bg-green-500 rounded-lg border-2 border-zinc-600">
+          <header className="flex items-center justify-between m-5">
+            <span className="font-bold text-lg">Total</span>
+            <DollarSign size={26}/>
+          </header>
+          <span className="font-extrabold block mt-8 ml-5 text-2xl">R$2.150,00</span>
+        </div>
       </div>
-      <div className="grid grid-cols-2 pt-14">
-        <div className="flex flex-col justify-center ml-5">
+      <div className="grid grid-cols-2 pt-14 pb-10">
+        <div className="flex flex-col ml-5">
           <div className="flex justify-center mb-2">
             <p className="text-3xl font-medium">Receitas</p>
           </div>
@@ -48,7 +68,7 @@ export default function Visualizar() {
             <p className="text-3xl font-medium">Despesas</p>
           </div>
           <div className="border border-zinc-900 rounded max-w-3xl mx-20">
-            <Table>
+            <Table className="">
               <TableHeader>
                 <TableRow>
                   <TableHead className="max-w-[340px]">Descrição</TableHead>
@@ -61,7 +81,7 @@ export default function Visualizar() {
                 <TableRow className="font-semibold">
                   <TableCell>Fui ao shopping!</TableCell>
                   <TableCell>11/08/2023</TableCell>
-                  <TableCell className="text-red-600">R$ 350,00</TableCell>
+                  <TableCell className="text-red-600">-R$ 350,00</TableCell>
                   <TableCell className="flex gap-2 font-bold ml-1">
                     <Link href={"/editar"}><Pencil /></Link> / <button type="submit"><Trash2 /></button>
                   </TableCell>
