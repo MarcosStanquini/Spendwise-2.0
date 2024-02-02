@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import { Header } from "../../components/header";
 
-export default function PrivateLayout({children}: {children: ReactNode}){
-  return(
+export default function PrivateLayout({ children }: { children: ReactNode }) {
+  return (
     <div>
-      <Header/>
+      <Header />
       {children}
     </div>
-  )
+  );
 }
