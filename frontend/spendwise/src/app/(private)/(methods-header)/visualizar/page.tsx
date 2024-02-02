@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   TableHeader,
   TableRow,
@@ -27,12 +27,12 @@ export default function Visualizar() {
     const buscarVisualizacoes = async () => {
       try {
         const datasNotExpend = (await orcamentoGet()).filter(
-          (visuExpend) => !visuExpend
+          (visuExpend: orcamentoGetSchema) => !visuExpend.expense
         );
         setDataNotExpend(datasNotExpend);
 
         const datasExpend = (await orcamentoGet()).filter(
-          (visuExpend) => visuExpend
+          (visuExpend: orcamentoGetSchema) => visuExpend.expense
         );
         setDataExpend(datasExpend);
       } catch (erro) {

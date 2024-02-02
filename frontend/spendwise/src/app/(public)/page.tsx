@@ -3,7 +3,7 @@ import { FormLogin } from "../../components/forms/formulario-login";
 
 export default function Login() {
   return (
-    <div className="grid min-h-[840px] grid-cols-2 mt-14 ml-20">
+    <div className="grid grid-cols-2 mt-14 ml-20">
       <FormLogin />
       <div className="flex justify-center  items-center w-10/12">
         <Image

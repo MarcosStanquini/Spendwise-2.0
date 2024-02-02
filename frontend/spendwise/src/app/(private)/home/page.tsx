@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div>
-      <div className="relative w-screen h-96 border-b-2 border-gray-500">
+    <div className="pb-8">
+      <div className="relative w-max-[100vw] h-96 border-b-2 border-gray-500">
         <Image
           src={"/home-image.jpg"}
           alt=""
