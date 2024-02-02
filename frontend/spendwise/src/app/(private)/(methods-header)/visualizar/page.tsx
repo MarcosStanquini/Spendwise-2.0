@@ -42,6 +42,19 @@ export default function Visualizar() {
     buscarVisualizacoes();
   }, []);
 
+  let totalExpend = dataExpend.reduce((acumulador, visualizacoesExpend) => {
+    return acumulador + visualizacoesExpend.value;
+  }, 0);
+
+  let totalNotExpend = dataNotExpend.reduce(
+    (acumulador, visualizacoesNotExpend) => {
+      return acumulador + visualizacoesNotExpend.value;
+    },
+    0
+  );
+
+  let totalSaldo = totalNotExpend - totalExpend;
+
   return (
     <div>
       <div className="flex justify-center gap-9 p-8">
@@ -50,34 +63,30 @@ export default function Visualizar() {
             <span className="font-bold text-lg">Receitas</span>
             <ArrowUpCircle className="text-green-700" size={26} />
           </header>
-          {dataNotExpend.map((visualizacoesNotExpend) => {
-            return (
-              <span className="font-extrabold block mt-8 ml-5 text-2xl">
-                {priceFormatter.format(visualizacoesNotExpend.value)}
-              </span>
-            );
-          })}
+          <span className="font-extrabold block mt-8 ml-5 text-2xl">
+            {priceFormatter.format(totalNotExpend)}
+          </span>
         </div>
         <div className="w-80 h-36 bg-gray-400 rounded-lg border-2 border-zinc-600">
           <header className="flex items-center justify-between m-5">
             <span className="font-bold text-lg">Despesas</span>
             <ArrowDownCircle className="text-red-700" size={26} />
           </header>
-          {dataExpend.map((visualizacoesExpend) => {
-            return (
-              <span className="font-extrabold block mt-8 ml-5 text-2xl">
-                {priceFormatter.format(visualizacoesExpend.value)}
-              </span>
-            );
-          })}
+          <span className="font-extrabold block mt-8 ml-5 text-2xl">
+            {priceFormatter.format(totalExpend)}
+          </span>
         </div>
-        <div className="w-80 h-36 bg-green-500 rounded-lg border-2 border-zinc-600">
+        <div
+          className={`w-80 h-36 rounded-lg border-2 border-zinc-600 ${
+            totalSaldo > 0 ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
           <header className="flex items-center justify-between m-5">
             <span className="font-bold text-lg">Total</span>
             <DollarSign size={26} />
           </header>
           <span className="font-extrabold block mt-8 ml-5 text-2xl">
-            R$2.150,00
+            {priceFormatter.format(totalSaldo)}
           </span>
         </div>
       </div>
@@ -96,23 +105,30 @@ export default function Visualizar() {
                   <TableHead>Editar/Deletar</TableHead>
                 </TableRow>
               </TableHeader>
+
               <TableBody>
-                <TableRow className="font-semibold">
-                  <TableCell className="max-w-[340px]">
-                    Caiu o salário do mês!
-                  </TableCell>
-                  <TableCell>02/06/2023</TableCell>
-                  <TableCell className="text-green-600">R$ 2500,00</TableCell>
-                  <TableCell className="flex gap-2 font-bold ml-1">
-                    <Link href={"/editar"}>
-                      <Pencil />
-                    </Link>{" "}
-                    /{" "}
-                    <button type="submit">
-                      <Trash2 />
-                    </button>
-                  </TableCell>
-                </TableRow>
+                {dataNotExpend.map((visualizacoesNotExpend) => {
+                  return (
+                    <TableRow className="font-semibold">
+                      <TableCell className="max-w-[340px]">
+                        {visualizacoesNotExpend.description}
+                      </TableCell>
+                      <TableCell>{visualizacoesNotExpend.date}</TableCell>
+                      <TableCell className="text-green-600">
+                        {priceFormatter.format(visualizacoesNotExpend.value)}
+                      </TableCell>
+                      <TableCell className="flex gap-2 font-bold ml-1">
+                        <Link href={"/editar"}>
+                          <Pencil />
+                        </Link>{" "}
+                        /{" "}
+                        <button type="submit">
+                          <Trash2 />
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>
@@ -132,20 +148,24 @@ export default function Visualizar() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow className="font-semibold">
-                  <TableCell>Fui ao shopping!</TableCell>
-                  <TableCell>11/08/2023</TableCell>
-                  <TableCell className="text-red-600">-R$ 350,00</TableCell>
-                  <TableCell className="flex gap-2 font-bold ml-1">
-                    <Link href={"/editar"}>
-                      <Pencil />
-                    </Link>{" "}
-                    /{" "}
-                    <button type="submit">
-                      <Trash2 />
-                    </button>
-                  </TableCell>
-                </TableRow>
+                {dataExpend.map((visualizacoesExpend) => {
+                  return (
+                    <TableRow className="font-semibold">
+                      <TableCell>{visualizacoesExpend.description}</TableCell>
+                      <TableCell>{visualizacoesExpend.date}</TableCell>
+                      <TableCell className="text-red-600">-{priceFormatter.format(visualizacoesExpend.value)}</TableCell>
+                      <TableCell className="flex gap-2 font-bold ml-1">
+                        <Link href={"/editar"}>
+                          <Pencil />
+                        </Link>{" "}
+                        /{" "}
+                        <button type="submit">
+                          <Trash2 />
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>
