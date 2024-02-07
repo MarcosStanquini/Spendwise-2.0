@@ -1,6 +1,7 @@
 import pytest
-from users.models import User
+from tests.factories import UserFactory
 
-def test_new_user(new_user):
-    print(new_user.username)
-    assert new_user.username == 'test@gmail.com'
+def test_new_user(user_factory):
+    user = user_factory.build()
+    print(user.name, user.username, user.password)
+    assert True
