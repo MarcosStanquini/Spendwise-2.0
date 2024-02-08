@@ -1,4 +1,5 @@
-"use client";
+
+import { DeleteButton } from "@/components/deleteButton";
 import {
   TableHeader,
   TableRow,
@@ -12,41 +13,25 @@ import { priceFormatter } from "@/utils/formatter-price";
 import {
   ArrowUpCircle,
   Pencil,
-  Trash2,
   DollarSign,
   ArrowDownCircle,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
-export default function Visualizar() {
-  const [dataExpend, setDataExpend] = useState<orcamentoGetSchema[]>([]);
-  const [dataNotExpend, setDataNotExpend] = useState<orcamentoGetSchema[]>([]);
+export default async function Visualizar() {
+  const datasNotExpend = (await orcamentoGet()).filter(
+    (visuExpend: orcamentoGetSchema) => !visuExpend.expense
+  );
 
-  useEffect(() => {
-    const buscarVisualizacoes = async () => {
-      try {
-        const datasNotExpend = (await orcamentoGet()).filter(
-          (visuExpend: orcamentoGetSchema) => !visuExpend.expense
-        );
-        setDataNotExpend(datasNotExpend);
+  const datasExpend = (await orcamentoGet()).filter(
+    (visuExpend: orcamentoGetSchema) => visuExpend.expense
+  );
 
-        const datasExpend = (await orcamentoGet()).filter(
-          (visuExpend: orcamentoGetSchema) => visuExpend.expense
-        );
-        setDataExpend(datasExpend);
-      } catch (erro) {
-        console.error("Erro ao buscar dados", erro);
-      }
-    };
-    buscarVisualizacoes();
-  }, []);
-
-  let totalExpend = dataExpend.reduce((acumulador, visualizacoesExpend) => {
+  let totalExpend = datasExpend.reduce((acumulador, visualizacoesExpend) => {
     return acumulador + visualizacoesExpend.value;
   }, 0);
 
-  let totalNotExpend = dataNotExpend.reduce(
+  let totalNotExpend = datasNotExpend.reduce(
     (acumulador, visualizacoesNotExpend) => {
       return acumulador + visualizacoesNotExpend.value;
     },
@@ -107,7 +92,7 @@ export default function Visualizar() {
               </TableHeader>
 
               <TableBody>
-                {dataNotExpend.map((visualizacoesNotExpend) => {
+                {datasNotExpend.map((visualizacoesNotExpend) => {
                   return (
                     <TableRow className="font-semibold">
                       <TableCell className="max-w-[340px]">
@@ -122,9 +107,7 @@ export default function Visualizar() {
                           <Pencil />
                         </Link>{" "}
                         /{" "}
-                        <button type="submit">
-                          <Trash2 />
-                        </button>
+                        <DeleteButton id={visualizacoesNotExpend.id}/>
                       </TableCell>
                     </TableRow>
                   );
@@ -148,7 +131,7 @@ export default function Visualizar() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {dataExpend.map((visualizacoesExpend) => {
+                {datasExpend.map((visualizacoesExpend) => {
                   return (
                     <TableRow className="font-semibold">
                       <TableCell>{visualizacoesExpend.description}</TableCell>
@@ -159,9 +142,7 @@ export default function Visualizar() {
                           <Pencil />
                         </Link>{" "}
                         /{" "}
-                        <button type="submit">
-                          <Trash2 />
-                        </button>
+                        <DeleteButton id={visualizacoesExpend.id} />
                       </TableCell>
                     </TableRow>
                   );

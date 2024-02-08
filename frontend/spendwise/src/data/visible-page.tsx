@@ -11,8 +11,15 @@ export interface orcamentoGetSchema{
   user: number
 }
 
-export async function orcamentoGet(){
-  const response = await api.get<orcamentoGetSchema[]>("/budgets")
-  console.log(response.data)
-  return response.data
+export async function orcamentoGet(): Promise<orcamentoGetSchema[]>{
+  const response = await api("/budgets", {
+    cache: 'no-store'
+  })
+  return await response.json()
+}
+
+export async function orcamentoDelete(id: number) {
+  await api(`/budgets/${id}`, {
+    method: 'DELETE'
+  })
 }
