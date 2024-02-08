@@ -1,4 +1,4 @@
-
+"use client"
 import { DeleteButton } from "@/components/deleteButton";
 import {
   TableHeader,
@@ -8,7 +8,7 @@ import {
   TableCell,
   Table,
 } from "@/components/ui/table";
-import { orcamentoGet, orcamentoGetSchema } from "@/data/visible-page";
+import { orcamentoGetSchema, useOrcamentos } from "@/data/visible-page";
 import { priceFormatter } from "@/utils/formatter-price";
 import {
   ArrowUpCircle,
@@ -18,25 +18,26 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default async function Visualizar() {
-  const datasNotExpend = (await orcamentoGet()).filter(
+export default function Visualizar() {
+  const {data} = useOrcamentos()
+  const datasNotExpend = data?.filter(
     (visuExpend: orcamentoGetSchema) => !visuExpend.expense
   );
 
-  const datasExpend = (await orcamentoGet()).filter(
+  const datasExpend = data?.filter(
     (visuExpend: orcamentoGetSchema) => visuExpend.expense
   );
 
-  let totalExpend = datasExpend.reduce((acumulador, visualizacoesExpend) => {
+  let totalExpend = datasExpend?.reduce((acumulador, visualizacoesExpend) => {
     return acumulador + visualizacoesExpend.value;
-  }, 0);
+  }, 0) || 0;
 
-  let totalNotExpend = datasNotExpend.reduce(
+  let totalNotExpend = datasNotExpend?.reduce(
     (acumulador, visualizacoesNotExpend) => {
       return acumulador + visualizacoesNotExpend.value;
     },
-    0
-  );
+    0) || 0
+  ;
 
   let totalSaldo = totalNotExpend - totalExpend;
 
@@ -92,7 +93,7 @@ export default async function Visualizar() {
               </TableHeader>
 
               <TableBody>
-                {datasNotExpend.map((visualizacoesNotExpend) => {
+                {datasNotExpend?.map((visualizacoesNotExpend) => {
                   return (
                     <TableRow className="font-semibold">
                       <TableCell className="max-w-[340px]">
@@ -131,7 +132,7 @@ export default async function Visualizar() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {datasExpend.map((visualizacoesExpend) => {
+                {datasExpend?.map((visualizacoesExpend) => {
                   return (
                     <TableRow className="font-semibold">
                       <TableCell>{visualizacoesExpend.description}</TableCell>
