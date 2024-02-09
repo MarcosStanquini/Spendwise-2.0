@@ -25,6 +25,10 @@ type FormLoginSchema = z.infer<typeof formLoginSchema>;
 export function FormLogin() {
 	const form = useForm<FormLoginSchema>({
 		resolver: zodResolver(formLoginSchema),
+		defaultValues: {
+			email: "",
+			senha: "",
+		}
 	});
 
 	function handleLoginUser(data: FormLoginSchema) {

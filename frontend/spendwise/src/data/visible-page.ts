@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { api } from "@/lib/api";
 import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 
@@ -13,7 +13,7 @@ export interface orcamentoGetSchema {
 	user: number;
 }
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 async function orcamentoGet() {
 	const response = await api.get<orcamentoGetSchema[]>("/budgets");
@@ -33,9 +33,9 @@ export function useOrcamentos() {
 	const { mutateAsync: removeOrcamento } = useMutation({
 		mutationFn: orcamentoDelete,
 		onSuccess: () => {
-			refetch()
+			refetch();
 		},
 	});
 
-	return {data, removeOrcamento};
+	return { data, removeOrcamento };
 }
