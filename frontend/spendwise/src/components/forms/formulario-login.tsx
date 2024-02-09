@@ -28,7 +28,7 @@ export function FormLogin() {
 		defaultValues: {
 			email: "",
 			senha: "",
-		}
+		},
 	});
 
 	function handleLoginUser(data: FormLoginSchema) {

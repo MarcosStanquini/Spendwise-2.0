@@ -8,7 +8,7 @@ import {
 	TableCell,
 	Table,
 } from "@/components/ui/table";
-import { orcamentoGetSchema, useOrcamentos } from "@/data/visible-page";
+import { orcamentoGetSchema, useOrcamentos } from "@/data/orcamentos-data";
 import { priceFormatter } from "@/utils/formatter-price";
 import {
 	ArrowUpCircle,
@@ -33,12 +33,12 @@ export default function Visualizar() {
 			return acumulador + visualizacoesExpend.value;
 		}, 0) || 0;
 
-		const totalNotExpend =
+	const totalNotExpend =
 		datasNotExpend?.reduce((acumulador, visualizacoesNotExpend) => {
 			return acumulador + visualizacoesNotExpend.value;
 		}, 0) || 0;
 
-		const totalSaldo = totalNotExpend - totalExpend;
+	const totalSaldo = totalNotExpend - totalExpend;
 
 	return (
 		<div>

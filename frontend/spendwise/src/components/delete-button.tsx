@@ -1,5 +1,5 @@
 "use client";
-import { useOrcamentos } from "@/data/visible-page";
+import { useOrcamentos } from "@/data/orcamentos-data";
 import { Trash2 } from "lucide-react";
 
 export function DeleteButton({ id }: { id: number }) {
