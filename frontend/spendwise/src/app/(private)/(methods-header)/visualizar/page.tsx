@@ -75,7 +75,7 @@ export default function Visualizar() {
 					</span>
 				</div>
 			</div>
-			<div className="grid grid-cols-2 pt-14 pb-10">
+			<div className="grid grid-cols-2 pt-14 pb-10 items-start">
 				<div className="flex flex-col ml-5">
 					<div className="flex justify-center mb-2">
 						<p className="text-3xl font-medium">Receitas</p>
