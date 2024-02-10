@@ -1,5 +1,6 @@
 import { Eye, NotebookPen, Plus } from "lucide-react";
 import Link from "next/link";
+import { LogoutButton } from "./logout-button";
 
 export function Header() {
 	return (
@@ -23,9 +24,7 @@ export function Header() {
 					Relatório
 				</Link>
 			</div>
-			<div className="flex items-center gap-5 mr-28 text-base font-semibold mt-1">
-				<Link href={"/"}>Conta</Link>
-			</div>
+			<LogoutButton/>
 		</div>
 	);
 }
