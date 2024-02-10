@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { LoginUser } from "@/data/Auth/login-user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
+import { AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -33,7 +34,7 @@ export function FormLogin() {
 		},
 	});
 
-	const { siginUser } = LoginUser()
+	const { siginUser, errorMensage } = LoginUser()
 
 	async function handleLoginUser(data: FormLoginSchema) {
 		await siginUser(data)
@@ -85,11 +86,11 @@ export function FormLogin() {
 							</FormItem>
 						)}
 					/>
-
+					<div className="h-6 ">{errorMensage && <p className="text-red-500 pt-2 font-semibold flex gap-2"><AlertCircle />{errorMensage}</p>}</div>
 					<div className="flex justify-center">
 						<Button
 							type="submit"
-							className="border-2 border-zinc-300 rounded-lg mt-8 w-40 h-10 hover:bg-zinc-300 duration-500 font-semibold"
+							className="border-2 border-zinc-300 rounded-lg mt-6 w-40 h-10 hover:bg-zinc-300 duration-500 font-semibold"
 						>
 							Logar
 						</Button>

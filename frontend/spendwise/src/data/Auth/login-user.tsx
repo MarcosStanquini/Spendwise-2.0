@@ -2,8 +2,9 @@
 
 import { api } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface loginUserSchema {
   username: string;
@@ -20,17 +21,28 @@ const setRefreshToken = (refresh: string) => {
 
 export function LoginUser() {
   const route = useRouter();
-
+  const [errorMensage, setErrorMensage] = useState<string | null>(null);
   async function signin(data: loginUserSchema) {
-    const response = await api.post("/token/", data);
-    const token = response.data.access;
-    const refreshTokens = response.data.refresh;
-    if (token) {
-      setToken(token);
-      setRefreshToken(refreshTokens);
-      axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        "authToken"
-      )}`;
+    try {
+      const response = await api.post("/token/", data);
+      const token = response.data.access;
+      const refreshTokens = response.data.refresh;
+      if (token) {
+        setToken(token);
+        setRefreshToken(refreshTokens);
+        setErrorMensage(null);
+        axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+          "authToken"
+        )}`;  
+        route.push('/visualizar')
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response && error.response.status === 401) {
+          setErrorMensage("A senha ou usuário está incorreto");
+          return;
+        }
+      }
     }
   }
 
@@ -41,9 +53,6 @@ export function LoginUser() {
 
   const { mutateAsync: siginUser } = useMutation({
     mutationFn: signin,
-    onSuccess: () => {
-      route.push("/visualizar");
-    },
   });
 
   const { mutateAsync: sigoutUser } = useMutation({
@@ -53,7 +62,7 @@ export function LoginUser() {
     },
   });
 
-  return { siginUser, sigoutUser };
+  return { siginUser, sigoutUser, errorMensage };
 }
 
 export async function refreshToken() {
