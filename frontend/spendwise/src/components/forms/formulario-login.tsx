@@ -9,6 +9,7 @@ import {
 	FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { LoginUser } from "@/data/Auth/login-user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
 import Link from "next/link";
@@ -16,23 +17,26 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formLoginSchema = z.object({
-	email: z.string(),
-	senha: z.string(),
+	username: z.string(),
+	password: z.string(),
 });
 
 type FormLoginSchema = z.infer<typeof formLoginSchema>;
 
 export function FormLogin() {
+
 	const form = useForm<FormLoginSchema>({
 		resolver: zodResolver(formLoginSchema),
 		defaultValues: {
-			email: "",
-			senha: "",
+			username: "",
+			password: "",
 		},
 	});
 
-	function handleLoginUser(data: FormLoginSchema) {
-		console.log(data);
+	const { siginUser } = LoginUser()
+
+	async function handleLoginUser(data: FormLoginSchema) {
+		await siginUser(data)
 		form.reset();
 	}
 
@@ -48,7 +52,7 @@ export function FormLogin() {
 					</div>
 					<FormField
 						control={form.control}
-						name="email"
+						name="username"
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className="font-bold relative top-2">
@@ -65,7 +69,7 @@ export function FormLogin() {
 					/>
 					<FormField
 						control={form.control}
-						name="senha"
+						name="password"
 						render={({ field }) => (
 							<FormItem className="mt-2">
 								<FormLabel className="font-bold relative top-2">

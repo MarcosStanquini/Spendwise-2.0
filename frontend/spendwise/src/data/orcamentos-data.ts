@@ -1,6 +1,7 @@
 "use client";
 import { api } from "@/lib/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { jwtDecode } from "jwt-decode";
 
 export interface orcamentoGetSchema {
 	id: number;
@@ -19,7 +20,6 @@ export interface orcamentoPostSchema {
 	date: string;
 	description: string;
 	expense?: boolean;
-	user: number;
 }
 
 async function orcamentoGet() {
@@ -32,8 +32,14 @@ async function orcamentoDelete(id: number) {
 }
 
 async function orcamentoPost(data: orcamentoPostSchema) {
-	const { date, ...restData } = data;
-	await api.post("/budgets/", { date, ...restData });
+	const token = localStorage.getItem("authToken");
+	if (token) {
+		const { user_id } = jwtDecode(token) as { user_id: number };
+		const { date, ...restData } = data;
+		console.log(user_id)
+		await api.post("/budgets/", { date, user: user_id, ...restData });
+	}
+	
 }
 
 export function useOrcamentos() {

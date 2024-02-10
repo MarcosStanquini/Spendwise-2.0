@@ -12,6 +12,7 @@ export default function Login() {
 					width={840}
 					height={840}
 					quality={80}
+					priority={true}
 				/>
 			</div>
 		</div>

@@ -75,7 +75,7 @@ export default function Visualizar() {
 					</span>
 				</div>
 			</div>
-			<div className="grid grid-cols-2 pt-14 pb-10">
+			<div className="grid grid-cols-2 pt-14 pb-10 items-start">
 				<div className="flex flex-col ml-5">
 					<div className="flex justify-center mb-2">
 						<p className="text-3xl font-medium">Receitas</p>
@@ -92,9 +92,9 @@ export default function Visualizar() {
 							</TableHeader>
 
 							<TableBody>
-								{datasNotExpend?.map((visualizacoesNotExpend) => {
+								{datasNotExpend?.map((visualizacoesNotExpend, i) => {
 									return (
-										<TableRow className="font-semibold">
+										<TableRow className="font-semibol" key={i}>
 											<TableCell className="max-w-[340px]">
 												{visualizacoesNotExpend.description}
 											</TableCell>
@@ -130,9 +130,9 @@ export default function Visualizar() {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{datasExpend?.map((visualizacoesExpend) => {
+								{datasExpend?.map((visualizacoesExpend, i) => {
 									return (
-										<TableRow className="font-semibold">
+										<TableRow className="font-semibold" key={i}>
 											<TableCell>{visualizacoesExpend.description}</TableCell>
 											<TableCell>{visualizacoesExpend.date}</TableCell>
 											<TableCell className="text-red-600">
