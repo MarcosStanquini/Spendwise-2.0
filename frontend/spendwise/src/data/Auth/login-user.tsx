@@ -11,8 +11,8 @@ interface loginUserSchema {
   password: string;
 }
 
-interface registerUserSchema{
-  name: string,
+interface registerUserSchema {
+  name: string;
   username: string;
   password: string;
 }
@@ -39,8 +39,8 @@ export function LoginUser() {
         setErrorMensage(null);
         axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
           "authToken"
-        )}`;  
-        route.push('/visualizar')
+        )}`;
+        route.push("/visualizar");
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -57,8 +57,18 @@ export function LoginUser() {
     axios.defaults.headers.common.Authorization = undefined;
   }
 
-  async function register(data: registerUserSchema){
-    await api.post('/users/',  data)
+  async function register(data: registerUserSchema) {
+    try {
+      await api.post("/users/", data);
+      route.push("/");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response && error.response.status === 400) {
+          setErrorMensage("Já existe este usuário");
+          return;
+        }
+      }
+    }
   }
 
   const { mutateAsync: siginUser } = useMutation({
@@ -72,15 +82,10 @@ export function LoginUser() {
     },
   });
 
-  const { mutateAsync: registerUser} = useMutation({
+  const { mutateAsync: registerUser } = useMutation({
     mutationFn: register,
-    onSuccess: () => {
-      route.push("/")
-    },
-    onError: () => {
-      setErrorMensage("Já existe um usuário com o mesmo email ou nome")
-    }
-  })
+    
+  });
 
   return { siginUser, sigoutUser, errorMensage, registerUser };
 }
