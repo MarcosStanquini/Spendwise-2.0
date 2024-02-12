@@ -11,6 +11,12 @@ interface loginUserSchema {
   password: string;
 }
 
+interface registerUserSchema{
+  name: string,
+  username: string;
+  password: string;
+}
+
 const setToken = (token: string) => {
   localStorage.setItem("authToken", token);
 };
@@ -51,6 +57,10 @@ export function LoginUser() {
     axios.defaults.headers.common.Authorization = undefined;
   }
 
+  async function register(data: registerUserSchema){
+    await api.post('/users/',  data)
+  }
+
   const { mutateAsync: siginUser } = useMutation({
     mutationFn: signin,
   });
@@ -62,7 +72,17 @@ export function LoginUser() {
     },
   });
 
-  return { siginUser, sigoutUser, errorMensage };
+  const { mutateAsync: registerUser} = useMutation({
+    mutationFn: register,
+    onSuccess: () => {
+      route.push("/")
+    },
+    onError: () => {
+      setErrorMensage("Já existe um usuário com o mesmo email ou nome")
+    }
+  })
+
+  return { siginUser, sigoutUser, errorMensage, registerUser };
 }
 
 export async function refreshToken() {
