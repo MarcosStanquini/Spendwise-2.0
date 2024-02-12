@@ -4,7 +4,10 @@ export const api = axios.create({
 	baseURL: "http://localhost:8000",
 });
 
-const token = localStorage.getItem("authToken");
+let token: string | null = null;
+if (typeof window !== "undefined") {
+	token = localStorage.getItem("authToken");
+}
 if (token) {
 	api.interceptors.response.use(
 		(response) => response,
