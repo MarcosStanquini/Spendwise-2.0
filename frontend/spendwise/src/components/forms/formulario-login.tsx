@@ -25,7 +25,6 @@ const formLoginSchema = z.object({
 type FormLoginSchema = z.infer<typeof formLoginSchema>;
 
 export function FormLogin() {
-
 	const form = useForm<FormLoginSchema>({
 		resolver: zodResolver(formLoginSchema),
 		defaultValues: {
@@ -34,10 +33,10 @@ export function FormLogin() {
 		},
 	});
 
-	const { siginUser, errorMensage } = LoginUser()
+	const { siginUser, errorMensage } = LoginUser();
 
 	async function handleLoginUser(data: FormLoginSchema) {
-		await siginUser(data)
+		await siginUser(data);
 		form.reset();
 	}
 
@@ -86,7 +85,14 @@ export function FormLogin() {
 							</FormItem>
 						)}
 					/>
-					<div className="h-6 ">{errorMensage && <p className="text-red-500 pt-2 font-semibold flex gap-2"><AlertCircle />{errorMensage}</p>}</div>
+					<div className="h-6 ">
+						{errorMensage && (
+							<p className="text-red-500 pt-2 font-semibold flex gap-2">
+								<AlertCircle />
+								{errorMensage}
+							</p>
+						)}
+					</div>
 					<div className="flex justify-center">
 						<Button
 							type="submit"

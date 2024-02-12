@@ -31,13 +31,12 @@ export default function Register() {
 		defaultValues: {
 			name: "",
 			username: "",
-			password: ""
-		}
+			password: "",
+		},
 	});
-	const { registerUser, errorMensage } = LoginUser()
+	const { registerUser, errorMensage } = LoginUser();
 	async function handleRegisterUser(data: FormRegisterSchema) {
-		
-		await registerUser(data)
+		await registerUser(data);
 	}
 
 	return (
@@ -98,7 +97,14 @@ export default function Register() {
 							</FormItem>
 						)}
 					/>
-					<div className="h-6 ">{errorMensage && <p className="text-red-500 pt-2 font-semibold flex gap-2"><AlertCircle />{errorMensage}</p>}</div>
+					<div className="h-6 ">
+						{errorMensage && (
+							<p className="text-red-500 pt-2 font-semibold flex gap-2">
+								<AlertCircle />
+								{errorMensage}
+							</p>
+						)}
+					</div>
 					<div className="flex justify-center">
 						<Button
 							type="submit"
