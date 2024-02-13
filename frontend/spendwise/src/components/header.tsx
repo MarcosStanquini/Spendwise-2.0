@@ -24,7 +24,7 @@ export function Header() {
 					Relatório
 				</Link>
 			</div>
-			<LogoutButton/>
+			<LogoutButton />
 		</div>
 	);
 }

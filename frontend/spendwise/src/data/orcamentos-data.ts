@@ -23,7 +23,10 @@ export interface orcamentoPostSchema {
 }
 
 async function orcamentoGet() {
-	const response = await api.get<orcamentoGetSchema[]>("/budgets");
+	const token = localStorage.getItem("authToken");
+	const response = await api.get<orcamentoGetSchema[]>("/budgets", {
+		headers: { Authorization: `Bearer ${token}` },
+	});
 	return response.data;
 }
 
@@ -36,10 +39,9 @@ async function orcamentoPost(data: orcamentoPostSchema) {
 	if (token) {
 		const { user_id } = jwtDecode(token) as { user_id: number };
 		const { date, ...restData } = data;
-		console.log(user_id)
+		console.log(user_id);
 		await api.post("/budgets/", { date, user: user_id, ...restData });
 	}
-	
 }
 
 export function useOrcamentos() {

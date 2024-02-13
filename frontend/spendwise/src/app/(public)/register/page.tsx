@@ -9,16 +9,18 @@ import {
 	FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { LoginUser } from "@/data/Auth/login-user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
+import { AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formRegisterSchema = z.object({
-	nome: z.string(),
-	email: z.string(),
-	senha: z.string(),
+	name: z.string(),
+	username: z.string(),
+	password: z.string(),
 });
 
 type FormRegisterSchema = z.infer<typeof formRegisterSchema>;
@@ -26,11 +28,15 @@ type FormRegisterSchema = z.infer<typeof formRegisterSchema>;
 export default function Register() {
 	const form = useForm<FormRegisterSchema>({
 		resolver: zodResolver(formRegisterSchema),
+		defaultValues: {
+			name: "",
+			username: "",
+			password: "",
+		},
 	});
-
-	function handleRegisterUser(data: FormRegisterSchema) {
-		console.log(data);
-		form.reset();
+	const { registerUser, errorMensage } = LoginUser();
+	async function handleRegisterUser(data: FormRegisterSchema) {
+		await registerUser(data);
 	}
 
 	return (
@@ -43,7 +49,7 @@ export default function Register() {
 					<p className="text-4xl font-bold mb-4">Register</p>
 					<FormField
 						control={form.control}
-						name="nome"
+						name="name"
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className="font-bold relative top-2">NOME</FormLabel>
@@ -58,7 +64,7 @@ export default function Register() {
 					/>
 					<FormField
 						control={form.control}
-						name="email"
+						name="username"
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className="font-bold relative top-2">
@@ -75,7 +81,7 @@ export default function Register() {
 					/>
 					<FormField
 						control={form.control}
-						name="senha"
+						name="password"
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className="font-bold relative top-2">
@@ -83,6 +89,7 @@ export default function Register() {
 								</FormLabel>
 								<FormControl>
 									<Input
+										type="password"
 										className="text-sm rounded-lg w-72 h-10 bg-zinc-300 focus:outline-none pl-2 font-semibold"
 										{...field}
 									/>
@@ -90,7 +97,14 @@ export default function Register() {
 							</FormItem>
 						)}
 					/>
-
+					<div className="h-6 ">
+						{errorMensage && (
+							<p className="text-red-500 pt-2 font-semibold flex gap-2">
+								<AlertCircle />
+								{errorMensage}
+							</p>
+						)}
+					</div>
 					<div className="flex justify-center">
 						<Button
 							type="submit"
@@ -116,38 +130,3 @@ export default function Register() {
 		</Form>
 	);
 }
-
-// <Form {...form}>
-//   <form onSubmit={form.handleSubmit(handleRegisterUser)}>
-//     <div>
-//       <p>Register</p>
-//     </div>
-//     <FormField
-//       control={form.control}
-//       name="email"
-//       render={({ field }) => (
-//         <FormItem>
-//           <FormLabel>Seila</FormLabel>
-//           <FormControl>
-//             <Input type="email" {...field}/>
-//           </FormControl>
-//         </FormItem>
-//       )}
-//     />
-//     <div>
-//       <Button>
-//         Registrar
-//       </Button>
-//     </div>
-//     <Label>
-//       <Link href={"/"}>
-//         Seila
-//       </Link>
-//     </Label>
-//     <Label>
-//       <Link href={"/esqueceSenha"}>
-//       Seila2
-//       </Link>
-//     </Label>
-//   </form>
-// </Form>
