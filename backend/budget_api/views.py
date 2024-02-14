@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 
 class BudgetViewSet(viewsets.ViewSet):
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
     serializer_class = BudgetSerializer
 
     def list(self, request):
@@ -19,7 +19,9 @@ class BudgetViewSet(viewsets.ViewSet):
     def create(self, request):
        serializer = BudgetSerializerNoUser(data=request.data)
        serializer.is_valid(raise_exception=True)
+       budget = serializer.save(user=request.user)  # Aqui você salva o objeto usando o serializer
        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     
 
     def update(self, request, pk=None):
