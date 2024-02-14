@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from budget_api.serializers import BudgetSerializer, UpdateBudgetSerializer
+from budget_api.serializers import BudgetSerializer, BudgetSerializerNoUser
 from budget_api.models import Budget
 from users.models import User
 from rest_framework import viewsets, status
@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 
 class BudgetViewSet(viewsets.ViewSet):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = BudgetSerializer
 
     def list(self, request):
@@ -17,7 +17,7 @@ class BudgetViewSet(viewsets.ViewSet):
         return Response(budgets, status.HTTP_200_OK)
     
     def create(self, request):
-       serializer = BudgetSerializer(data=request.data)
+       serializer = BudgetSerializerNoUser(data=request.data)
        serializer.is_valid(raise_exception=True)
        return Response(serializer.data, status=status.HTTP_201_CREATED)
     
@@ -25,7 +25,7 @@ class BudgetViewSet(viewsets.ViewSet):
     def update(self, request, pk=None):
         queryset = Budget.objects.all()
         budget = get_object_or_404(queryset, pk=pk)
-        serializer = UpdateBudgetSerializer(data = request.data)
+        serializer = BudgetSerializerNoUser(data = request.data)
         serializer.is_valid(raise_exception=True)
         serializer.update(budget, serializer.validated_data)
         return Response(serializer.data)

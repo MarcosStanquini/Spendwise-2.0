@@ -6,8 +6,10 @@ class BudgetSerializer(serializers.ModelSerializer):
         model = Budget
         fields = '__all__'
 
-class UpdateBudgetSerializer(serializers.ModelSerializer):
+class BudgetSerializerNoUser(serializers.ModelSerializer):
     class Meta:
         model = Budget
         fields = ["name", "value", "date", "description", "expense"]
         
+
+
