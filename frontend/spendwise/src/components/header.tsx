@@ -1,6 +1,6 @@
 import { Eye, NotebookPen, Plus } from "lucide-react";
 import Link from "next/link";
-import { LogoutButton } from "./logout-button";
+import { LogoutButton } from "./button/logout-button";
 
 export function Header() {
 	return (

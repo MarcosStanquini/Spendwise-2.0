@@ -55,7 +55,6 @@ export default function Inserir() {
 		const { date, ...restData } = data;
 		const dateDeData = date.toISOString().slice(0, 10);
 		await adicionaOrcamento({ date: dateDeData, ...restData });
-
 		form.reset();
 	}
 
