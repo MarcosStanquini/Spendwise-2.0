@@ -15,6 +15,7 @@ import { Label } from "@radix-ui/react-label";
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const formRegisterSchema = z.object({
@@ -37,6 +38,7 @@ export default function Register() {
 	const { registerUser, errorMensage } = LoginUser();
 	async function handleRegisterUser(data: FormRegisterSchema) {
 		await registerUser(data);
+		toast.success("Registrado com sucesso")
 	}
 
 	return (

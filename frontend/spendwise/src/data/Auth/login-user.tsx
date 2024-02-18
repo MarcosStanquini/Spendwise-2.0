@@ -40,7 +40,7 @@ export function LoginUser() {
 				axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
 					"authToken",
 				)}`;
-				route.push("/visualizar");
+				route.push("/home");
 			}
 		} catch (error) {
 			if (error instanceof AxiosError) {

@@ -30,6 +30,7 @@ import { cn } from "@/lib/utils";
 import { useOrcamentoId } from "@/data/orcamentos-data";
 import { useEffect, useState } from "react";
 import { DialogClose } from "@radix-ui/react-dialog";
+import toast from "react-hot-toast";
 
 interface EditButtonBudgetProps {
   budgetName: "Despesa" | "Receita";
@@ -77,6 +78,7 @@ export function EditButton({ budgetName, id }: EditButtonBudgetProps) {
     const { date, ...restData } = data;
     const dateDeData = date.toISOString().slice(0, 10);
     await editOrcamento({ date: dateDeData, ...restData });
+    toast.success("Editado com sucesso")
   }
 
   return (

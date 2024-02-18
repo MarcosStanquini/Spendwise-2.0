@@ -19,10 +19,6 @@ export function Header() {
 					<Eye className="mt-[2.5px]" />
 					Visualizar
 				</Link>
-				<Link href={"/relatorio"} className="flex gap-1">
-					<NotebookPen className="mt-[2.5px]" />
-					Relatório
-				</Link>
 			</div>
 			<LogoutButton />
 		</div>
