@@ -51,6 +51,7 @@ export function useOrcamentos() {
   const { data, refetch } = useQuery({
     queryKey: ["orcamentos"],
     queryFn: orcamentoGet,
+    refetchOnWindowFocus: false,
   });
 
   const { mutateAsync: removeOrcamento } = useMutation({

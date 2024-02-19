@@ -7,6 +7,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { LoginUser } from "@/data/Auth/login-user";
@@ -19,9 +20,23 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 
 const formRegisterSchema = z.object({
-	name: z.string(),
-	username: z.string(),
-	password: z.string(),
+	name: z.string().min(1, {
+		message: "Insira o seu nome!"
+	}).max(255, {
+		message: "Tem que ser menor que 255 letras!"
+	}),
+	username: z.string().email({
+		message: "Tem que ser um email!"
+	}).min(1, {
+		message: "Insira o email!"
+	}).max(255, {
+		message: "Tem que ser menor que 255 letras!"
+	}),
+	password: z.string().min(1, {
+		message: "Insira a senha!"
+	}).max(255, {
+		message: "Tem que ser menor que 255 letras!"
+	}),
 });
 
 type FormRegisterSchema = z.infer<typeof formRegisterSchema>;
@@ -47,8 +62,8 @@ export default function Register() {
 				onSubmit={form.handleSubmit(handleRegisterUser)}
 				className="flex flex-col justify-center items-center w-screen h-screen"
 			>
-				<div className="bg-zinc-100 w-[25rem] h-[28rem] flex flex-col justify-center items-center rounded-xl shadow-2xl">
-					<p className="text-4xl font-bold mb-4">Register</p>
+				<div className="bg-zinc-100 w-[25rem] min-h-[28rem] flex flex-col justify-center items-center rounded-xl shadow-2xl">
+					<p className="text-4xl font-bold mb-4 mt-5">Register</p>
 					<FormField
 						control={form.control}
 						name="name"
@@ -61,6 +76,7 @@ export default function Register() {
 										{...field}
 									/>
 								</FormControl>
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -78,6 +94,7 @@ export default function Register() {
 										{...field}
 									/>
 								</FormControl>
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -96,6 +113,7 @@ export default function Register() {
 										{...field}
 									/>
 								</FormControl>
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -110,7 +128,7 @@ export default function Register() {
 					<div className="flex justify-center">
 						<Button
 							type="submit"
-							className="border-2 border-zinc-300 rounded-lg mt-6 w-44 h-10 hover:bg-zinc-300 duration-500 font-semibold"
+							className="border-2 border-zinc-300 rounded-lg mt-4 w-44 h-10 hover:bg-zinc-300 duration-500 font-semibold"
 						>
 							Registrar
 						</Button>
@@ -121,7 +139,7 @@ export default function Register() {
 							Login
 						</Link>
 					</Label>
-					<Label className="flex mr-[4.2rem] font-semibold">
+					<Label className="flex mr-[4.2rem] font-semibold mb-5">
 						Esqueceu a senha?
 						<Link href={"/"} className="text-blue-500 ml-2">
 							Redefinir

@@ -7,6 +7,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { LoginUser } from "@/data/Auth/login-user";
@@ -18,8 +19,16 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formLoginSchema = z.object({
-	username: z.string(),
-	password: z.string(),
+	username: z.string().min(1, {
+		message: "Insira o email!"
+	}).max(255, {
+		message: "Tem que ser menor que 255 letras!"
+	}),
+	password: z.string().min(1, {
+		message: "Insira a senha!"
+	}).max(255, {
+		message: "Tem que ser menor que 255 letras!"
+	}),
 });
 
 type FormLoginSchema = z.infer<typeof formLoginSchema>;
@@ -46,9 +55,9 @@ export function FormLogin() {
 				onSubmit={form.handleSubmit(handleLoginUser)}
 				className="flex flex-col justify-center items-center"
 			>
-				<div className="bg-zinc-100 w-[23rem] h-[24rem] flex flex-col justify-center items-center rounded-xl shadow-2xl">
+				<div className="bg-zinc-100 w-[23rem] min-h-[24rem] flex flex-col justify-center items-center rounded-xl shadow-2xl">
 					<div className="flex justify-center">
-						<p className="text-4xl font-bold mb-4">SpendWise</p>
+						<p className="text-4xl font-bold mb-4 mt-5">SpendWise</p>
 					</div>
 					<FormField
 						control={form.control}
@@ -64,6 +73,7 @@ export function FormLogin() {
 										{...field}
 									/>
 								</FormControl>
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -82,6 +92,7 @@ export function FormLogin() {
 										{...field}
 									/>
 								</FormControl>
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -96,12 +107,12 @@ export function FormLogin() {
 					<div className="flex justify-center">
 						<Button
 							type="submit"
-							className="border-2 border-zinc-300 rounded-lg mt-6 w-40 h-10 hover:bg-zinc-300 duration-500 font-semibold"
+							className="border-2 border-zinc-300 rounded-lg mt-4 w-40 h-10 hover:bg-zinc-300 duration-500 font-semibold"
 						>
 							Logar
 						</Button>
 					</div>
-					<Label className="pt-2 flex mr-[4.25rem] mt-1 font-semibold">
+					<Label className="pt-2 flex mr-[4.25rem] mt-1 font-semibold mb-5">
 						Não possui conta?
 						<Link href={"/register"} className="text-blue-500 ml-2">
 							Registrar
