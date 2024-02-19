@@ -38,12 +38,28 @@ interface EditButtonBudgetProps {
 }
 
 const formEditSchema = z.object({
-  name: z.string(),
-  value: z.coerce.number(),
+  name: z
+    .string()
+    .min(1, {
+      message: "Insira a receita ou despesa!",
+    })
+    .max(255, {
+      message: "Tem que ser menor que 255 letras!",
+    }),
+  value: z.coerce.number().min(1, {
+    message: "Insira valor maior que 0",
+  }),
   date: z.date({
     required_error: "Por favor selecione a data!",
   }),
-  description: z.string(),
+  description: z
+    .string()
+    .min(1, {
+      message: "Insira uma descrição!",
+    })
+    .max(255, {
+      message: "Tem que ser menor que 255 letras!",
+    }),
   expense: z.boolean().default(false).optional(),
 });
 
@@ -78,7 +94,7 @@ export function EditButton({ budgetName, id }: EditButtonBudgetProps) {
     const { date, ...restData } = data;
     const dateDeData = date.toISOString().slice(0, 10);
     await editOrcamento({ date: dateDeData, ...restData });
-    toast.success("Editado com sucesso")
+    toast.success("Editado com sucesso");
   }
 
   return (

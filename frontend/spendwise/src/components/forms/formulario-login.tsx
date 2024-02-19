@@ -19,7 +19,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formLoginSchema = z.object({
-	username: z.string().min(1, {
+	username: z.string().email({
+		message: "Tem que ser um email!"
+	}).min(1, {
 		message: "Insira o email!"
 	}).max(255, {
 		message: "Tem que ser menor que 255 letras!"
