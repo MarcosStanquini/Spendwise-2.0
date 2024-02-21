@@ -77,13 +77,16 @@ export function EditButton({ budgetName, id }: EditButtonBudgetProps) {
   });
 
   const { getIdOrcamento, editOrcamento } = useOrcamentoId(id);
-
+  
   useEffect(() => {
     if (getIdOrcamento) {
+      const dateString = getIdOrcamento?.date
+      const partesDate = dateString.split("-")
+      const date = new Date(+partesDate[0], +partesDate[1] - 1, +partesDate[2])
       form.reset({
         name: getIdOrcamento?.name ?? "",
         value: getIdOrcamento?.value ?? "",
-        date: new Date(getIdOrcamento?.date),
+        date: date,
         description: getIdOrcamento?.description,
         expense: getIdOrcamento?.expense,
       });

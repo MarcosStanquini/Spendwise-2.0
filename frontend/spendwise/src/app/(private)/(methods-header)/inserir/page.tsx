@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useOrcamentos } from "@/data/orcamentos-data";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -56,6 +56,7 @@ const formInserirSchema = z.object({
 type FormInserirSchema = z.infer<typeof formInserirSchema>;
 
 export default function Inserir() {
+  
   const { adicionaOrcamento } = useOrcamentos();
 
   const form = useForm<FormInserirSchema>({
